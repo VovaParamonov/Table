@@ -1,24 +1,26 @@
 #container {
 	width: 300px;
-	height: 300px;
+	min-height: 150px;
 	background-color: #E3DAF6;
 	box-sizing: border-box;
 	margin: 100px auto;
 	box-shadow: 5px 5px 30px black;
 	border-radius: 10px;
+	padding-bottom: 5px;
 }
 
 #header {
 	margin: 0 auto;
-	width: 300px;
+	width: 80%;
 	height:20px;
 	/*box-sizing: border-box;*/
+	display: flex;
+	justify-content: space-between;
 }
 
 em {
 	display: inline-block;
 	float: left;
-	margin-left: 20px;
 }
 
 em:first-child {
@@ -26,7 +28,7 @@ em:first-child {
 }
 
 em:last-child {
-	margin-left: 120px;
+
 
 }
 #for_input {
@@ -41,7 +43,8 @@ input {
 
 
 .for_buttons {
-	width: inherit;
+	width: 280px;
+	margin: 0 auto;
 	display: flex;
 	justify-content: space-around;
 }
@@ -56,7 +59,6 @@ input {
 #for_table {
 	/*background-color: red*/;
 	width: auto;
-	max-height: 185px;
 	margin: 5px;
 	/*padding-top: 20px;*/
 	display: block;
@@ -68,6 +70,9 @@ table {
 	max-height: 185px;
 	margin: 0 auto;
 	background-color:#ABB2B9;
+	min-width: 90%;
+	width: auto;
+	text-align: center;
 }
 
 td {
@@ -88,9 +93,10 @@ td {
 }
 
 .create_col, .create_row {
-	width: auto;
+	width: 40%;
 	visibility: hidden;
-	font-size: 10px;
+	position: absolute;
+	font-size: 11px;
 }
 
 .create_col {
@@ -98,15 +104,69 @@ td {
 }
 
 .del_row, .del_col	{
-	width: auto;
+	width: 40%;
 	color: red;
-	visibility:	hidden;
+	position: absolute;
+	visibility: hidden;
+	font-size: 11px;
 }
 
 .btn_action {
 	visibility: visible;
+	position: static;
 }
 
 .del_active:hover {
 	color: red;
+}
+
+.ajax_btns {
+	display: flex;
+	justify-content: space-between;
+	width: 250px;
+	margin: 10px auto;
+}
+
+.ajax_btns input {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+
+.loader {
+	visibility: hidden;
+	/*transform: translate(-50%, -50%);*/
+	transform-origin: center;
+	border: 10px solid #2f3640;
+	border-top: 10px solid blue;
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	opacity: 0.5;
+}
+
+.loading {
+	visibility: visible;
+	animation: spin 2s ease infinite;
+}
+
+.loader-fail {
+	border-color: red;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	50% {
+		transform: rotate(360deg);
+	}
+
+	100% {
+		transform: rotate(1080deg);
+	}
 }

@@ -1,5 +1,16 @@
 import {addTable, sortTable, drow_table, check_tr, arr_values_create, delTable} from './funcs';
 var $ = require("jquery");
+
+export {
+  sortRowActive,
+  sortColActive,
+
+  delRowActive,
+  delColActive,
+
+  createRowActive,
+  createColActive
+};
 //-------Переменные-------
 var $btn_create = $('#button');
 var $for_table = $('#for_table');
@@ -9,6 +20,9 @@ var $btn_create_row = $('.create_row');
 var $btn_create_col = $('.create_col');
 var $btn_sort_row = $('.sort_row');
 var $btn_sort_col = $('.sort_col');
+var $loader = $('.loader');
+var $btn_save =  $('.ajax_save');
+var $btn_load =  $('.ajax_load');
 
 var arr_values = [];
 var columns;
@@ -26,13 +40,62 @@ var delColActive = false;
 var createRowActive = false;
 var createColActive = false;
 
-$(document).ready(function(){
+function loadTable(){
   $.get("http://dev.bittenred.com:61536/table", function(data){
     if (data != ""){
       arr_values = data;
       drow_table(arr_values);
+      $('.td').addClass('td-active');
+      $btn_del_row.addClass('btn_action');
+      $btn_del_col.addClass('btn_action');
+      $btn_create_row.addClass('btn_action');
+      $btn_create_col.addClass('btn_action');
     }
+  }).done(function(res,inf){
+    console.log(res);
+    $loader.removeClass('loading');
+  }).fail(function(res,inf){
+    console.log(res);
+    $loader.addClass('loader-fail');
+    setTimeout(function(){
+      $loader.removeClass('loader-fail');
+      $loader.removeClass('loading');
+    },1000)
   })
+}
+
+function saveTable() {
+  $.ajax({
+      url: 'http://dev.bittenred.com:61536/table',
+      dataType: 'json',
+      type: 'post',
+      contentType: 'application/json',
+      data: JSON.stringify(arr_values),
+      timeout: 5000
+  }).done(function (res) {
+      console.log(res);
+
+      $.get('http://dev.bittenred.com:61536/table').done(function (res) {
+          console.log(res)
+      $loader.removeClass('loading');
+    })
+  }).fail(function(res,inf){
+      console.log(res);
+      $loader.addClass('loader-fail');
+      setTimeout(function(){
+        $loader.removeClass('loader-fail');
+        $loader.removeClass('loading');
+      },1000)
+    });
+}
+
+$btn_load.on('click', function(){
+  $loader.addClass('loading');
+  loadTable();
+})
+$btn_save.on('click', function(){
+  $loader.addClass('loading');
+  saveTable();
 })
 
 //-------------------Обработчики-------------------------
@@ -91,19 +154,6 @@ $btn_create.click(function(){
   // alert( "Data Loaded: " + data );
 // });
   //$.post("http://dev.bittenred.com:61536/Table", $.extend({},[[1,2,3,4],[1,2,4,5]]),function(){});
-  $.ajax({
-      url: 'http://dev.bittenred.com:61536/table',
-      dataType: 'json',
-      type: 'post',
-      contentType: 'application/json',
-      data: JSON.stringify([[1, 2, 3], [1, 2, 3], [1, 2, 3]]),
-  }).done(function (res) {
-      console.log(res);
-
-      $.get('http://dev.bittenred.com:61536/table').done(function (res) {
-          console.log(res)
-      })
-  })
   $('.td').addClass('td-active');
   $btn_del_row.addClass('btn_action');
   $btn_del_col.addClass('btn_action');

@@ -1,5 +1,13 @@
 var $ = require("jquery");
 import './DOM.js';
+// import {sortRowActive,
+// sortColActive,
+//
+// delRowActive,
+// delColActive,
+//
+// createRowActive,
+// createColActive} from './DOM.js'
 
 export function addTable (arr_values, activeCol = null, activeRow = null) {
   var arr1;
@@ -61,20 +69,18 @@ function sortTable (sortRow, sortCol, table) {
 }
 
 function drow_table(arr_values, activeRow, activeCol){
-  if (arr_values.length == 0 || arr_values[0].length == 0 ) {
-    return
+  if (arr_values != ''){
+    if (arr_values.length > 20) {
+      alert("Таблица была на сокращена на " + (arr_values.length - 20) + " строк");
+      arr_values.splice(20, arr_values.length);
+    }
+    if (arr_values[0].length > 9) {
+      alert("Таблица была на сокращена на " + (arr_values[0].length - 9) + " столбец");
+      arr_values.forEach(function(item, i, arr){
+        item.splice(9, item.length);
+      });
+    }
   }
-
-  if (arr_values.length > 5) {
-    alert("Таблица была на сокращена на " + (arr_values.length - 5) + " строк");
-    arr_values.splice(5, arr_values.length);
-  }
-  // if (arr_values[0].length > 9) {
-  //   alert("Таблица была на сокращена на " + (arr_values[0].length - 9) + " столбец");
-  //   arr_values.forEach(function(item, i, arr){
-  //     item.splice(9, item.length);
-  //   });
-  // }
   var $container = $('#for_table');
 
 	var $table = $('<table>');
