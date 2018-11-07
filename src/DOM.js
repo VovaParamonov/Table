@@ -13,6 +13,7 @@ export {
 };
 //-------Переменные-------
 var $btn_create = $('#button');
+var $btn_clear = $('#clear');
 var $for_table = $('#for_table');
 var $btn_del_row = $('.del_row');
 var $btn_del_col = $('.del_col');
@@ -33,23 +34,40 @@ var activeCol = -1;
 
 var sortRowActive = false;
 var sortColActive = false;
-
 var delRowActive = false;
 var delColActive = false;
-
 var createRowActive = false;
 var createColActive = false;
+
+//---------------------Функции---------------
+function action_clear(){
+  createRowActive = false;
+  createColActive = false;
+  delRowActive = false;
+  delColActive = false;
+  sortColActive = false;
+  sortRowActive = false;
+}
+function btns_activated() {
+  $btn_del_row.addClass('btn_action');
+  $btn_del_col.addClass('btn_action');
+  $btn_create_row.addClass('btn_action');
+  $btn_create_col.addClass('btn_action');
+  $('.td').addClass('td-active');
+}
+function btns_deactivated(){
+  $btn_del_row.removeClass("btn_action");
+  $btn_del_col.removeClass("btn_action");
+  $btn_create_row.removeClass("btn_action");
+  $btn_create_col.removeClass("btn_action");
+}
 
 function loadTable(){
   $.get("http://dev.bittenred.com:61536/table", function(data){
     if (data != ""){
       arr_values = data;
       drow_table(arr_values);
-      $('.td').addClass('td-active');
-      $btn_del_row.addClass('btn_action');
-      $btn_del_col.addClass('btn_action');
-      $btn_create_row.addClass('btn_action');
-      $btn_create_col.addClass('btn_action');
+      btns_activated();
     }
   }).done(function(res,inf){
     console.log(res);
@@ -99,54 +117,46 @@ $btn_save.on('click', function(){
 })
 
 //-------------------Обработчики-------------------------
+$btn_clear.on('click', function(){
+  arr_values = [];
+  btns_deactivated();
+  drow_table(arr_values);
+})
+
 $btn_sort_row.on('click', function(){
   $('.td').addClass('td-active');
+  action_clear();
   sortRowActive = true;
-  createRowActive = false;
-  createColActive = false;
-  delRowActive = false;
-  delColActive = false;
-  sortColActive = false;
+
 });
 
 $btn_sort_col.on('click', function(){
   $('.td').addClass('td-active');
+  action_clear()
   sortColActive = true;
-  createRowActive = false;
-  createColActive = false;
-  delRowActive = false;
-  delColActive = false;
-  sortRowActive = false;
 });
 
 $btn_del_col.on('click', function(){
   $('.td').addClass('td-active');
+  action_clear();
   delColActive = true;
-  createRowActive = false;
-  createColActive = false;
-  delRowActive = false;
-  sortColActive = false;
-  sortRowActive = false;
 });
 $btn_del_row.on('click', function(){
   $('.td').addClass('td-active');
+  action_clear();
   delRowActive = true;
-  createRowActive = false;
-  createColActive = false;
   // $for_table.children('td').map(function(index, elem) {});
 });
 
 $btn_create_col.on('click', function(){
   $('.td').addClass('td-active');
+  action_clear();
   createColActive = true;
-  delRowActive = false;
-  delColActive = false;
 });
 $btn_create_row.on('click', function(){
   $('.td').addClass('td-active');
+  action_clear();
   createRowActive = true;
-  delRowActive = false;
-  delColActive = false;
 });
 
 $btn_create.click(function(){
@@ -154,11 +164,7 @@ $btn_create.click(function(){
   // alert( "Data Loaded: " + data );
 // });
   //$.post("http://dev.bittenred.com:61536/Table", $.extend({},[[1,2,3,4],[1,2,4,5]]),function(){});
-  $('.td').addClass('td-active');
-  $btn_del_row.addClass('btn_action');
-  $btn_del_col.addClass('btn_action');
-  $btn_create_row.addClass('btn_action');
-  $btn_create_col.addClass('btn_action');
+  btns_activated();
   rows = Number($('#row_value').val());
   columns = Number($('#column_value').val());
 

@@ -17,30 +17,16 @@
 	display: flex;
 	justify-content: space-between;
 }
-
-em {
-	display: inline-block;
-	float: left;
-}
-
-em:first-child {
-
-}
-
-em:last-child {
-
-
-}
 #for_input {
 	display: flex;
 	justify-content: space-around;
 }
 input {
+	outline-style: none;
 	width: 40px;
 	border-radius: 5px;
 	background-color: #BFC9CA;
 }
-
 
 .for_buttons {
 	width: 280px;
@@ -48,10 +34,18 @@ input {
 	display: flex;
 	justify-content: space-around;
 }
-#button {
+
+
+.for_button {
+	margin: 10px auto;
+	width: 300px;
+	display: flex;
+	justify-content: center;
+}
+
+.for_button input {
 	width: 100px;
 	display: block;
-	margin: 10px auto;
 	background-color:#ABB2B9;
 }
 
