@@ -1,33 +1,44 @@
 import {addTable, sortTable, arr_values_create, delTable} from './funcs';
 import $ from 'jquery';
 
-//-------Переменные-------
-var $btn_create = $('#button');
-var $btn_clear = $('#clear');
-var $for_table = $('#for_table');
-var $btn_del_row = $('.del_row');
-var $btn_del_col = $('.del_col');
-var $btn_create_row = $('.create_row');
-var $btn_create_col = $('.create_col');
-var $btn_sort_row = $('.sort_row');
-var $btn_sort_col = $('.sort_col');
-var $loader = $('.loader');
-var $btn_save =  $('.ajax_save');
-var $btn_load =  $('.ajax_load');
+// TODO: continue this changes
+// TODO: remove most global state
 
-var arr_values = [];
-var columns;
-var rows;
+export default ($container) => {
+    // var $container = $('#for_table');
 
-var activeRow = -1;
-var activeCol = -1;
+    var $btn_create = $container.find('#button');
 
-var sortRowActive = false;
-var sortColActive = false;
-var delRowActive = false;
-var delColActive = false;
-var createRowActive = false;
-var createColActive = false;
+    var $btn_clear = $('#clear');
+    var $for_table = $('#for_table');
+    var $btn_del_row = $('.del_row');
+    var $btn_del_col = $('.del_col');
+    var $btn_create_row = $('.create_row');
+    var $btn_create_col = $('.create_col');
+    var $btn_sort_row = $('.sort_row');
+    var $btn_sort_col = $('.sort_col');
+    var $loader = $('.loader');
+    var $btn_save =  $('.ajax_save');
+    var $btn_load =  $('.ajax_load');
+
+    //-------Переменные-------
+
+    var arr_values = [];
+    var columns;
+    var rows;
+
+    var activeRow = -1;
+    var activeCol = -1;
+
+    var sortRowActive = false;
+    var sortColActive = false;
+    var delRowActive = false;
+    var delColActive = false;
+    var createRowActive = false;
+    var createColActive = false;
+}
+
+
 
 //---------------------Функции---------------
 
@@ -44,7 +55,7 @@ function drow_table(arr_values, activeRow, activeCol){
             });
         }
     }
-    var $container = $('#for_table');
+
 
     var $table = $('<table>');
 

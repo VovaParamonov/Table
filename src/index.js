@@ -1,2 +1,7 @@
 import './css/styles.css';
-import './DOM.js';
+
+import table from './DOM.js';
+
+var $table1 = $('#container1');
+
+table($table1);
