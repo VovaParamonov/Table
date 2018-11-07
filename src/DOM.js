@@ -1,16 +1,6 @@
-import {addTable, sortTable, drow_table, check_tr, arr_values_create, delTable} from './funcs';
-var $ = require("jquery");
+import {addTable, sortTable, arr_values_create, delTable} from './funcs';
+import $ from 'jquery';
 
-export {
-  sortRowActive,
-  sortColActive,
-
-  delRowActive,
-  delColActive,
-
-  createRowActive,
-  createColActive
-};
 //-------Переменные-------
 var $btn_create = $('#button');
 var $btn_clear = $('#clear');
@@ -40,6 +30,55 @@ var createRowActive = false;
 var createColActive = false;
 
 //---------------------Функции---------------
+
+function drow_table(arr_values, activeRow, activeCol){
+    if (arr_values != ''){
+        if (arr_values.length > 20) {
+            alert("Таблица была на сокращена на " + (arr_values.length - 20) + " строк");
+            arr_values.splice(20, arr_values.length);
+        }
+        if (arr_values[0].length > 9) {
+            alert("Таблица была на сокращена на " + (arr_values[0].length - 9) + " столбец");
+            arr_values.forEach(function(item, i, arr){
+                item.splice(9, item.length);
+            });
+        }
+    }
+    var $container = $('#for_table');
+
+    var $table = $('<table>');
+
+    arr_values.forEach(function(row, rowIndex) {
+
+        var $row = $('<tr data-row = "' + rowIndex + '" >');
+
+        if (rowIndex == activeRow && activeCol == -1) {
+
+            //-----Выделение
+            $row.css('fontWeight', 'bold');
+            setTimeout(function(){
+                $row.css('fontWeight', 'normal');
+            }, 500);
+        }
+
+        row.forEach(function(col, colIndex) {
+            var $col = $('<td class="td" data-row="' + rowIndex + '" data-col="' + colIndex + '" >');
+
+            $col.text(col);
+            $row.append($col);
+
+            if (colIndex == activeCol) {
+                $col.css('fontWeight', 'bold');
+                setTimeout(function(){
+                    $col.css('fontWeight', 'normal');
+                }, 500);
+            }
+        });
+        $table.append($row)
+    });
+    $container.html($table)
+}
+
 function action_clear(){
   createRowActive = false;
   createColActive = false;
@@ -91,12 +130,8 @@ function saveTable() {
       data: JSON.stringify(arr_values),
       timeout: 5000
   }).done(function (res) {
-      console.log(res);
-
-      $.get('http://dev.bittenred.com:61536/table').done(function (res) {
-          console.log(res)
       $loader.removeClass('loading');
-    })
+      console.log(res);
   }).fail(function(res,inf){
       console.log(res);
       $loader.addClass('loader-fail');
@@ -171,6 +206,7 @@ $btn_create.click(function(){
   }
   drow_table(arr_values, activeRow, activeCol);
 });
+
 $for_table.on('click', 'td', function(){
   if (delColActive == true || delRowActive == true) {
     if (delRowActive == true) {
@@ -179,10 +215,7 @@ $for_table.on('click', 'td', function(){
       delColActive = false;
       delRowActive = false;
       if (arr_values.length == 0) {
-        $btn_del_row.removeClass("btn_action");
-        $btn_del_col.removeClass("btn_action");
-        $btn_create_row.removeClass("btn_action");
-        $btn_create_col.removeClass("btn_action");
+        btns_deactivated();
       }
       drow_table(arr_values);
     } else if (delColActive == true) {
@@ -191,10 +224,7 @@ $for_table.on('click', 'td', function(){
       delColActive = false;
       delRowActive = false;
       if (arr_values[0].length == 0) {
-        $btn_del_row.removeClass("btn_action");
-        $btn_del_col.removeClass("btn_action");
-        $btn_create_row.removeClass("btn_action");
-        $btn_create_col.removeClass("btn_action");
+        btns_deactivated();
       }
       drow_table(arr_values);
     }
