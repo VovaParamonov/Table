@@ -1,20 +1,11 @@
 var $ = require("jquery");
 import './DOM.js';
-// import {sortRowActive,
-// sortColActive,
-//
-// delRowActive,
-// delColActive,
-//
-// createRowActive,
-// createColActive} from './DOM.js'
 
 export function addTable (arr_values, activeCol = null, activeRow = null) {
   var arr1;
   var arr2;
 
   if (activeCol != null) {
-
     arr_values = arr_values.map(function(item, i, arr){
       arr1 = item.slice(0, activeCol);
       arr2 = item.slice(activeCol, item.length);
@@ -91,6 +82,7 @@ function drow_table(arr_values, activeRow, activeCol){
 
 		if (rowIndex == activeRow && activeCol == -1) {
 
+    //-----Выделение
 			$row.css('fontWeight', 'bold');
 			setTimeout(function(){
 				$row.css('fontWeight', 'normal');
@@ -104,7 +96,7 @@ function drow_table(arr_values, activeRow, activeCol){
 			$row.append($col);
 
 			if (colIndex == activeCol) {
-				$col.css('fontWeight', 'bold'); //#6BED54
+				$col.css('fontWeight', 'bold');
 				setTimeout(function(){
 					$col.css('fontWeight', 'normal');
 				}, 500);
@@ -140,10 +132,3 @@ function arr_values_create(rows, columns) {
 }
 
 export {sortTable, drow_table, check_tr, arr_values_create, delTable};
-
-
-
-
-// export function test(){
-// 	return 'Hello webpack';
-// }
