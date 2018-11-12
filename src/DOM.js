@@ -1,25 +1,25 @@
 import {addTable, sortTable, arr_values_create, delTable} from './funcs';
+import {loadAjax, saveAjax} from './api.js';
 import $ from 'jquery';
 
 // TODO: continue this changes
 // TODO: remove most global state
 
-export default ($container) => {
-    // var $container = $('#for_table');
+export default function table($container) {
 
     var $btn_create = $container.find('#button');
 
-    var $btn_clear = $('#clear');
-    var $for_table = $('#for_table');
-    var $btn_del_row = $('.del_row');
-    var $btn_del_col = $('.del_col');
-    var $btn_create_row = $('.create_row');
-    var $btn_create_col = $('.create_col');
-    var $btn_sort_row = $('.sort_row');
-    var $btn_sort_col = $('.sort_col');
-    var $loader = $('.loader');
-    var $btn_save =  $('.ajax_save');
-    var $btn_load =  $('.ajax_load');
+    var $btn_clear = $container.find('#clear');
+    var $for_table = $container.find('#for_table');
+    var $btn_del_row = $container.find('.del_row');
+    var $btn_del_col = $container.find('.del_col');
+    var $btn_create_row = $container.find('.create_row');
+    var $btn_create_col = $container.find('.create_col');
+    var $btn_sort_row = $container.find('.sort_row');
+    var $btn_sort_col = $container.find('.sort_col');
+    var $loader = $container.find('.loader');
+    var $btn_save =  $container.find('.ajax_save');
+    var $btn_load =  $container.find('.ajax_load');
 
     //-------Переменные-------
 
@@ -36,13 +36,10 @@ export default ($container) => {
     var delColActive = false;
     var createRowActive = false;
     var createColActive = false;
-}
-
-
 
 //---------------------Функции---------------
 
-function drow_table(arr_values, activeRow, activeCol){
+function drow_table(arr_values, activeRow, activeCol, btn){
     if (arr_values != ''){
         if (arr_values.length > 20) {
             alert("Таблица была на сокращена на " + (arr_values.length - 20) + " строк");
@@ -87,7 +84,7 @@ function drow_table(arr_values, activeRow, activeCol){
         });
         $table.append($row)
     });
-    $container.html($table)
+    $container.find('#for_table').html($table);
 }
 
 function action_clear(){
@@ -103,7 +100,7 @@ function btns_activated() {
   $btn_del_col.addClass('btn_action');
   $btn_create_row.addClass('btn_action');
   $btn_create_col.addClass('btn_action');
-  $('.td').addClass('td-active');
+
 }
 function btns_deactivated(){
   $btn_del_row.removeClass("btn_action");
@@ -113,47 +110,48 @@ function btns_deactivated(){
 }
 
 function loadTable(){
-  $.get("http://dev.bittenred.com:61536/table", function(data){
-    if (data != ""){
-      arr_values = data;
-      drow_table(arr_values);
-      btns_activated();
+  function callLoad(result){
+    if (typeof(result)=='object') {
+      if (result.length == 0 || result[0].length == 0){
+        alert("На сервере нет сохраненных таблиц");
+        $loader.removeClass('loading');
+      } else {
+        arr_values = result;
+        drow_table(arr_values);
+        btns_activated();
+        $loader.removeClass('loading');
+      }
+    } else {
+      console.log(result);
+      alert("Ошибка загрузки")
+      alert(result)
+      $loader.addClass('loader-fail');
+      setTimeout(function(){
+        $loader.removeClass('loader-fail');
+        $loader.removeClass('loading');
+      },1000);
     }
-  }).done(function(res,inf){
-    console.log(res);
-    $loader.removeClass('loading');
-  }).fail(function(res,inf){
-    console.log(res);
-    $loader.addClass('loader-fail');
-    setTimeout(function(){
-      $loader.removeClass('loader-fail');
-      $loader.removeClass('loading');
-    },1000)
-  })
+  }
+  loadAjax(callLoad);
 }
 
 function saveTable() {
-  $.ajax({
-      url: 'http://dev.bittenred.com:61536/table',
-      dataType: 'json',
-      type: 'post',
-      contentType: 'application/json',
-      data: JSON.stringify(arr_values),
-      timeout: 5000
-  }).done(function (res) {
+  function callSave(result){
+    if (result == "Done"){
       $loader.removeClass('loading');
-      console.log(res);
-  }).fail(function(res,inf){
-      console.log(res);
+    } else if (result == "fail"){
       $loader.addClass('loader-fail');
       setTimeout(function(){
         $loader.removeClass('loader-fail');
         $loader.removeClass('loading');
       },1000)
-    });
+    }
+  }
+  saveAjax(arr_values,callSave);
 }
 
-$btn_load.on('click', function(){
+$btn_load.on('click', function(eventObj){
+  //table($(eventObj).parents('container'));
   $loader.addClass('loading');
   loadTable();
 })
@@ -170,40 +168,40 @@ $btn_clear.on('click', function(){
 })
 
 $btn_sort_row.on('click', function(){
-  $('.td').addClass('td-active');
+  $container.find('.td').addClass('td-active');
   action_clear();
   sortRowActive = true;
 });
 
 $btn_sort_col.on('click', function(){
-  $('.td').addClass('td-active');
+  $container.find('.td').addClass('td-active');
   action_clear()
   sortColActive = true;
 });
 
 $btn_del_col.on('click', function(){
-  $('.td').addClass('td-active');
+  $container.find('.td').addClass('td-active');
   action_clear();
   delColActive = true;
 });
 $btn_del_row.on('click', function(){
-  $('.td').addClass('td-active');
+  $container.find('.td').addClass('td-active');
   action_clear();
   delRowActive = true;
 });
 
 $btn_create_col.on('click', function(){
-  $('.td').addClass('td-active');
+  $container.find('.td').addClass('td-active');
   action_clear();
   createColActive = true;
 });
 $btn_create_row.on('click', function(){
-  $('.td').addClass('td-active');
+  $container.find('.td').addClass('td-active');
   action_clear();
   createRowActive = true;
 });
 
-$btn_create.click(function(){
+$btn_create.click(function(eventObj){
   btns_activated();
   rows = Number($('#row_value').val());
   columns = Number($('#column_value').val());
@@ -215,7 +213,7 @@ $btn_create.click(function(){
   if (arr_values.length == 0 || arr_values[0].length == 0){
     btns_deactivated();
   }
-  drow_table(arr_values, activeRow, activeCol);
+  drow_table(arr_values, activeRow, activeCol, eventObj);
 });
 
 $for_table.on('click', 'td', function(){
@@ -269,3 +267,4 @@ $for_table.on('click', 'td', function(){
     }
   }
 });
+}

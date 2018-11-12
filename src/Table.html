@@ -6,7 +6,36 @@
 		<!--script type="text/javascript" src="scripts/jquery.js"></script-->
 	</head>
 	<body>
-		<div id="container">
+		<div id="container1">
+			<div id="header"> <!--Почему содержимое не влияет на размер? ((-->
+				<em id="line">Строк:</em>
+				<em id="colimn">Столбцов:</em>
+			</div>
+			<div id="for_input">
+				<div><input type="number" id="row_value" name="row_value" value = '5'><input class='sort_row' type='button' value = 'sort'></div>
+				<div><input type="number" id="column_value" name="column_value" value='9'><input class='sort_col' type='button' value='sort'></div>
+			</div>
+			<div class = "for_button">
+				<input id="button" type="submit" name="Enter" value="Создать">
+				<input id="clear" type="submit" name="Enter" value="Сбросить">
+			</div>
+			<div class='for_buttons'>
+				<input  class='create_row' type="submit" name="create_row" value="Добавить строку">
+				<input  class='create_col' type="submit" name="create_col" value="Добавить столбец">
+			</div>
+			<div id="for_table">
+			</div>
+			<div class='for_buttons'>
+				<input  class='del_row' type="submit" name="del_row" value="Удалить строку ">
+				<input  class='del_col' type="submit" name="del_col" value="Удалить столбец">
+			</div>
+			<div class="ajax_btns">
+				<input class='ajax_save' type='button' name='save' value='Save'>
+				<div class='loader'></div>
+				<input class='ajax_load' type='button' name='save' value='Load'>
+			</div>
+		</div>
+		<div id="container2">
 			<div id="header"> <!--Почему содержимое не влияет на размер? ((-->
 				<em id="line">Строк:</em>
 				<em id="colimn">Столбцов:</em>

@@ -16,6 +16,10 @@ module.exports = {
     hot: true
   },
   plugins: [
+    // new webpack.ProvidePlugin({
+    //   $: 'jquery',
+    //   jQuery: 'jquery'
+    // }),
     new CleanWebpackPlugin(['public/dist']),
     new HtmlWebpackPlugin({
       title: 'Output Management',

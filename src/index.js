@@ -1,7 +1,6 @@
 import './css/styles.css';
-
+import $ from 'jquery';
 import table from './DOM.js';
 
-var $table1 = $('#container1');
-
-table($table1);
+table($('#container1'));
+table($('#container2'));

@@ -1,9 +1,18 @@
-#container {
+body {
+	display: flex;
+	justify-content: space-around;
+	padding-top: 100px;
+	flex-wrap:wrap;
+	overflow-x: hidden;
+	align-items: flex-start;
+}
+
+#container1, #container2 {
+	margin-top: 20px;
 	width: 300px;
 	min-height: 150px;
 	background-color: #E3DAF6;
 	box-sizing: border-box;
-	margin: 100px auto;
 	box-shadow: 5px 5px 30px black;
 	border-radius: 10px;
 	padding-bottom: 5px;
