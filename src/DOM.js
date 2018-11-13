@@ -203,8 +203,8 @@ $btn_create_row.on('click', function(){
 
 $btn_create.click(function(eventObj){
   btns_activated();
-  rows = Number($('#row_value').val());
-  columns = Number($('#column_value').val());
+  rows = Number($container.find('#row_value').val());
+  columns = Number($container.find('#column_value').val());
 
   arr_values = arr_values_create(rows, columns);
 
