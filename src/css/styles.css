@@ -5,16 +5,18 @@ body {
 	flex-wrap:wrap;
 	overflow-x: hidden;
 	align-items: flex-start;
+	font-family: 'Poiret One', cursive;
 }
 
 #container1, #container2 {
 	margin-top: 20px;
 	width: 300px;
 	min-height: 150px;
-	background-color: #E3DAF6;
+	background-color: #F2F3F4;
 	box-sizing: border-box;
-	box-shadow: 15px 15px 15px grey;
-	border-radius: 10px;
+	box-shadow: 10px 10px 15px #ABB2B9;
+	border: 1px solid #AEB6BF;
+	border-radius: 5px;
 	padding-bottom: 5px;
 }
 
@@ -22,19 +24,28 @@ body {
 	margin: 0 auto;
 	width: 80%;
 	height:20px;
-	/*box-sizing: border-box;*/
 	display: flex;
 	justify-content: space-between;
+}
+
+#column {
+	position: relative;
+	transform: translate(-20px);
 }
 #for_input {
 	display: flex;
 	justify-content: space-around;
 }
 input {
+	text-align: center;
+	opacity: 0.75;
+	font-family: 'Poiret One', cursive;
+	font-weight: bold;
+	color: #34495E;
 	outline-style: none;
 	width: 40px;
-	border-radius: 5px;
-	background-color: #BFC9CA;
+	border-radius: 3px;
+	background-color: #D5D8DC;
 }
 
 .for_buttons {
@@ -53,17 +64,15 @@ input {
 }
 
 .for_button input {
-	width: 100px;
+	width: 130px;
 	display: block;
-	background-color:#ABB2B9;
+	background-color:#D5D8DC;
 }
 
 
 #for_table {
-	/*background-color: red*/;
 	width: auto;
 	margin: 5px;
-	/*padding-top: 20px;*/
 	display: block;
 	box-sizing: border-box;
 }
@@ -72,7 +81,7 @@ table {
 	border-radius: 10px;
 	max-height: 185px;
 	margin: 0 auto;
-	background-color:#ABB2B9;
+	background-color:#E5E7E9  ;
 	min-width: 90%;
 	width: auto;
 	text-align: center;
@@ -80,7 +89,7 @@ table {
 
 td {
 	border-radius: 4px;
-	background-color: #C8C9F4;
+	background-color: #D7DBDD;
 	display: inline-block;
 	width: 20px;
 	height: 20px;
@@ -108,7 +117,7 @@ td {
 
 .del_row, .del_col	{
 	width: 40%;
-	color: red;
+	color: #E74C3C;
 	position: absolute;
 	visibility: hidden;
 	font-size: 11px;
@@ -138,7 +147,6 @@ td {
 
 .loader {
 	visibility: hidden;
-	/*transform: translate(-50%, -50%);*/
 	transform-origin: center;
 	border: 10px solid #2f3640;
 	border-top: 10px solid blue;
