@@ -5,8 +5,8 @@ import $ from 'jquery';
 // TODO: continue this changes
 // TODO: remove most global state
 
-export default function table($container) {
-
+export default function table($container, id) {
+    var tableID = id;
     var $btn_create = $container.find('#button');
 
     var $btn_clear = $container.find('#clear');
@@ -132,7 +132,7 @@ function loadTable(){
       },1000);
     }
   }
-  loadAjax(callLoad);
+  loadAjax(callLoad, tableID);
 }
 
 function saveTable() {
@@ -147,7 +147,7 @@ function saveTable() {
       },1000)
     }
   }
-  saveAjax(arr_values,callSave);
+  saveAjax(arr_values,callSave, tableID);
 }
 
 $btn_load.on('click', function(eventObj){

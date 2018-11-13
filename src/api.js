@@ -3,9 +3,9 @@
 
 import $ from 'jquery';
 
-export function loadAjax(callback){
+export function loadAjax(callback, id){
   var result;
-  $.get("http://dev.bittenred.com:61536/table", function(data){
+  $.get("http://dev.bittenred.com:61536/table/" + id, function(data){
     result = data;
     callback(result)
   }).fail(function(res){
@@ -13,10 +13,10 @@ export function loadAjax(callback){
     callback(result);
   })
 }
-export function saveAjax(arr_values,callback) {
+export function saveAjax(arr_values,callback, id) {
   var result;
   $.ajax({
-      url: 'http://dev.bittenred.com:61536/table',
+      url: 'http://dev.bittenred.com:61536/table/' + id,
       dataType: 'json',
       type: 'post',
       contentType: 'application/json',
