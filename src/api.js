@@ -9,7 +9,8 @@ export function loadAjax(callback, id){
     result = data;
     callback(result)
   }).fail(function(res){
-    result = res;
+    console.log(res);
+    result = "fail";
     callback(result);
   })
 }

@@ -41,6 +41,9 @@ export default function table($container, id) {
 
 function drow_table(arr_values, activeRow, activeCol, btn){
     if (arr_values != ''){
+      if(arr_values[0] == ''){
+        arr_values = [];
+      } else {
         if (arr_values.length > 20) {
             alert("Таблица была на сокращена на " + (arr_values.length - 20) + " строк");
             arr_values.splice(20, arr_values.length);
@@ -51,6 +54,8 @@ function drow_table(arr_values, activeRow, activeCol, btn){
                 item.splice(9, item.length);
             });
         }
+      }
+
     }
 
 
@@ -123,8 +128,6 @@ function loadTable(){
       }
     } else {
       console.log(result);
-      alert("Ошибка загрузки")
-      alert(result)
       $loader.addClass('loader-fail');
       setTimeout(function(){
         $loader.removeClass('loader-fail');
